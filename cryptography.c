@@ -67,8 +67,6 @@ struct envelope *envelope_encryption(unsigned char *pt, int fd) {
   return env;
 }
 
-// leggo dalla socket i 3 messaggi dal main e passo qua!
-// la chiave nel main e dopo passa qua la chiave e la sua lung
 unsigned char *envelope_decryption(struct envelope *env) {
   unsigned char *pt;
   int written; // bytes written from the SealUpdate, SealFinal
@@ -77,8 +75,6 @@ unsigned char *envelope_decryption(struct envelope *env) {
   EVP_CIPHER_CTX *context;
   handle_null(fp_prv_key = fopen("./private_key.pem", "r"), "fopen");
   handle_null_ssl(prv_key = PEM_read_PrivateKey(fp_prv_key, NULL, NULL, NULL));
-  // POI MANDO LA CHIAVE SIMMETRICA DECIFRATA AL CLIENT CIFRANDOLA SYMMETRICAMENTE 
-  //CON LA SUA CHIAVE PUBBLICA del client
   handle_null(pt = (unsigned char*)calloc(BLOCK_SIZE + BUFFER_SIZE + 1, 
       sizeof(unsigned char)), "calloc");
   handle_null_ssl(context = EVP_CIPHER_CTX_new());
